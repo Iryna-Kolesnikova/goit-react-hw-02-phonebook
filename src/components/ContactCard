@@ -1,0 +1,16 @@
+export const ContactCard = ({
+  quiz: { id, name, number },
+  onDelete,
+}) => {
+  return (
+      <MetaWrapper>
+        <Text>
+          <b>{name}: </b>
+        </Text>
+        <Text>
+          <b>{number}</b>
+        </Text>
+      </MetaWrapper>
+      <Button onClick={() => onDelete(id)}>Delete</Button>
+  );
+};
