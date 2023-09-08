@@ -13,13 +13,11 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   addContact = (name, number) => {
     const isNameRepeat = this.state.contacts.some(
-      contact => contact.name === name
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     if (isNameRepeat) {
       alert(`"${name}" is already in contacts.`);
@@ -47,17 +45,21 @@ export class App extends Component {
       filter: newFilter,
     });
   };
-  render() {
-    const searchContact = this.state.contacts.filter(cont =>
-      cont.name.toLowerCase().includes(this.state.filter.toLowerCase())
+
+  getFilterContacts() {
+    return this.state.contacts.filter(cont =>
+      cont.name.toLowerCase().includes(this.state.filter.toLocaleLowerCase())
     );
+  }
+  render() {
+    const filterContacts = this.getFilterContacts();
     return (
       <div>
         <h1>Phonebook</h1>
         <ContactForm onAddContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter filter={this.state.filter} onChange={this.handleFilterChange} />
-        <ContactList items={searchContact} onDelete={this.deleteContact} />
+        <ContactList items={filterContacts} onDelete={this.deleteContact} />
       </div>
     );
   }
